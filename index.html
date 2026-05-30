@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sogogi Shabu & Grill Buaran — All You Can Eat Korea</title>
+    <meta name="description" content="Nikmati AYCE Shabu & Grill Korea sepuasnya di Sogogi Buaran. Harga ramah mahasiswa, tempat luas & ber-AC. Mulai Rp100rb!" />
+    <meta property="og:title" content="Sogogi Shabu & Grill Buaran — AYCE Korea" />
+    <meta property="og:description" content="Makan puas tanpa cemas! AYCE Shabu & Grill Korea. Harga mulai Rp100rb. Tempat luas, AC dingin, cocok buat kumpul keluarga & teman." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sogogi-buaran.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥩</text></svg>" />
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+
+    <!-- ===== Dark Mode JS (load early to prevent FOUC) ===== -->
+    <script src="assets/js/dark-mode.js"></script>
+
+    <!-- ===== JSON-LD Structured Data (LocalBusiness Schema) ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Sogogi Shabu & Grill Buaran",
+        "description": "Nikmati AYCE Shabu & Grill Korea sepuasnya di Sogogi Buaran. Harga ramah mahasiswa, tempat luas & ber-AC.",
+        "url": "https://sogogi-buaran.com",
+        "telephone": "+622129195053",
+        "servesCuisine": "Korean",
+        "priceRange": "Rp100.000 - Rp125.000",
+        "image": "https://sogogi-buaran.com/assets/hero.webp",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Samping BAKS Coffee, Jl. Buaran Raya No.104-108 Blok A, RT.1/RW.14",
+            "addressLocality": "Duren Sawit",
+            "addressRegion": "Jakarta Timur",
+            "postalCode": "13470",
+            "addressCountry": "ID"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -6.2291,
+            "longitude": 106.9197
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "12:00",
+            "closes": "22:00"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "bestRating": "5",
+            "ratingCount": "15000"
+        }
+    }
+    </script>
+
+    <!-- ===== PWA Manifest ===== -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#D90429">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sogogi Buaran">
+</head>
+<body>
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav id="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">🥩</div>
+                <div>Sogogi <span>Buaran</span></div>
+            </a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema" title="Ganti tema terang/gelap">🌙</button>
+            <button class="hamburger-btn" id="mobileToggle" aria-label="Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#promo">Promo</a>
+                <a href="#perks">Kenapa Kami</a>
+                <a href="#menu">Menu Andalan</a>
+                <a href="#testimonials">Kata Mereka</a>
+                <a href="#reservation">Reservasi</a>
+                <a href="#contact">Lokasi</a>
+                <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="nav-cta-wa">
+                    💬 Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="glow-orbs">
+            <div class="glow-orb"></div>
+            <div class="glow-orb"></div>
+            <div class="glow-orb"></div>
+        </div>
+        <div class="hero-mega-emoji">🥩</div>
+        <div class="hero-mega-emoji">🍲</div>
+        <div class="hero-mega-emoji">🥬</div>
+        <div class="hero-mega-emoji">🔥</div>
+        <div class="hero-mega-emoji">🥟</div>
+        <div class="hero-mega-emoji">🥤</div>
+        <div class="container hero-grid hero-parallax-layer">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    🥩 All You Can Eat Korea
+                </div>
+                <h1>Makan Puas Tanpa Cemas<br />di <span class="highlight">Sogogi Buaran</span>!</h1>
+                <p>
+                    Nikmati sensasi All You Can Eat Shabu &amp; Grill otentik Korea sepuasnya.
+                    Harga ramah di kantong mahasiswa, tempat luas, adem, dan super nyaman
+                    untuk momen kebersamaanmu.
+                </p>
+                <div class="hero-actions">                        <a href="#menu" class="btn btn-primary magnetic-btn btn-shimmer">Lihat Menu Paket &darr;</a>
+                    <a href="#reservation" class="btn btn-wa magnetic-btn">💬 Reservasi Sekarang</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-img-placeholder">
+                    <picture>
+                        <source srcset="assets/images/hero-480w.webp 480w, assets/images/hero-768w.webp 768w, assets/images/hero-1024w.webp 1024w, assets/images/hero-1200w.webp 1200w" sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, 1200px" type="image/webp" />
+                        <source srcset="assets/images/hero-480w.jpg 480w, assets/images/hero-768w.jpg 768w, assets/images/hero-1024w.jpg 1024w, assets/images/hero-1200w.jpg 1200w" sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, 1200px" type="image/jpeg" />
+                        <img src="assets/hero.webp" alt="Sogogi Shabu & Grill AYCE" loading="eager" width="1200" height="800" decoding="async" fetchpriority="high" class="hero-parallax-img" />
+                    </picture>
+                    <span class="overlay"></span>
+                    <span class="steam"></span>
+                    <span class="steam"></span>
+                    <span class="steam"></span>
+                    <span class="emoji-fg">🥩🍲</span>
+                    <span class="img-label">Shabu &amp; Grill • AYCE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.5"></path>
+            <path d="M0,20 C240,60 480,0 720,20 C960,40 1200,0 1440,20 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== PROMO BANNER ===== -->
+    <section class="promo" id="promo">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Promo Spesial</span>
+                <h2 class="section-title">Promo &amp; Diskon Terbatas! 🔥</h2>
+                <p class="section-sub">Jangan lewatkan kesempatan makan AYCE lebih hemat dengan promo-promo spesial berikut.</p>
+            </div>
+            <div class="promo-grid">
+                <div class="promo-card reveal reveal-up reveal-d-1">
+                    <div class="promo-icon">🎂</div>
+                    <span class="promo-badge">GRATIS</span>
+                    <h3>Birthday Spesial</h3>
+                    <p>Rayakan ultahmu di Sogogi! Dapatkan <strong>free dessert &amp; mini cake</strong> spesial untuk kamu dan teman-teman (min. 4 orang).</p>
+                    <span class="promo-term">Tunjukkan KTP berlaku</span>
+                    <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20klaim%20promo%20birthday%20spesial..." target="_blank" rel="noopener" class="promo-cta magnetic-btn">Klaim Promo →</a>
+                </div>
+                <div class="promo-card reveal reveal-up reveal-d-2">
+                    <div class="promo-icon">🧑‍🎓</div>
+                    <span class="promo-badge">DISKON Rp15RB</span>
+                    <h3>Pelajar &amp; Mahasiswa</h3>
+                    <p>Khusus untuk kamu yang masih sekolah/kuliah! Nikmati <strong>potongan Rp15.000</strong> setiap pax dengan menunjukkan kartu pelajar/mahasiswa.</p>
+                    <span class="promo-term">Berlaku Senin–Jumat</span>
+                    <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20tanya%20promo%20pelajar%20dan%20mahasiswa..." target="_blank" rel="noopener" class="promo-cta magnetic-btn">Tanya Detail →</a>
+                </div>
+                <div class="promo-card reveal reveal-up reveal-d-3">
+                    <div class="promo-icon">👨‍👩‍👧‍👦</div>
+                    <span class="promo-badge">FREE 1 PAX</span>
+                    <h3>Group Deal</h3>
+                    <p>Datang bareng rombongan? Setiap <strong>5 orang berbayar, 1 orang GRATIS!</strong> Cocok banget buat gathering, reuni, &amp; acara komunitas.</p>
+                    <span class="promo-term">Reservasi minimal H-1</span>
+                    <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20rombongan%20untuk..." target="_blank" rel="noopener" class="promo-cta magnetic-btn">Reservasi Group →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#D90429" opacity="0.04"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-main)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== BRAND PERKS ===== -->
+    <section class="perks" id="perks">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Kenapa Kami</span>
+                <h2 class="section-title">Kenapa Makan di Sogogi Buaran?</h2>
+                <p class="section-sub">Kami tahu yang kamu cari: tempat enak, harga ramah, dan suasana nyaman buat kumpul bareng.</p>
+            </div>
+            <div class="perks-grid">
+                <div class="perk-card reveal reveal-up reveal-d-1 tilt-card">
+                    <div class="perk-icon tilt-card-inner" style="background:rgba(217,4,41,0.1);color:var(--primary);">👛</div>
+                    <h3 class="tilt-card-inner">Budget Anak Kampus</h3>
+                    <p class="tilt-card-inner">Makan AYCE sepuasnya mulai dari <strong>Rp 100rb - Rp 125rb</strong> aja. Solusi terbaik buat makan enak di tanggal tua!</p>
+                    <div class="tilt-card-glow"></div>
+                </div>
+                <div class="perk-card reveal reveal-up reveal-d-2 tilt-card">
+                    <div class="perk-icon tilt-card-inner" style="background:rgba(244,162,97,0.15);color:#c4813e;">❄️</div>
+                    <h3 class="tilt-card-inner">Tempat Adem &amp; Nyaman</h3>
+                    <p class="tilt-card-inner">Dilengkapi AC yang dingin maksimal. Gak perlu takut gerah atau bau asap berlebih saat nge-grill bareng temen.</p>
+                    <div class="tilt-card-glow"></div>
+                </div>
+                <div class="perk-card reveal reveal-up reveal-d-3 tilt-card">
+                    <div class="perk-icon tilt-card-inner" style="background:rgba(0,184,148,0.1);color:#00b894;">📏</div>
+                    <h3 class="tilt-card-inner">Ruang Luas &amp; Fleksibel</h3>
+                    <p class="tilt-card-inner">Jarak antar meja yang lebar bikin suasana makan jadi lega. Cocok banget buat acara kumpul keluarga besar atau komunitas.</p>
+                    <div class="tilt-card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-main)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== STATS ===== -->
+    <section class="perks" id="stats" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Angka Kami</span>
+                <h2 class="section-title">Sogogi Buaran dalam Angka 📊</h2>
+                <p class="section-sub">Kepercayaan pelanggan adalah bukti kualitas kami.</p>
+            </div>
+            <div class="stats-grid reveal">
+                <div class="stat-card reveal reveal-scale reveal-d-1" data-count="15000" data-suffix="+">
+                    <div class="stat-icon">🍖</div>
+                    <div class="stat-value"><span class="stat-number">0</span><span class="stat-plus">+</span></div>
+                    <div class="stat-label">Pelanggan Puas</div>
+                </div>
+                <div class="stat-card reveal reveal-scale reveal-d-2" data-count="5" data-suffix="">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value"><span class="stat-number">0</span></div>
+                    <div class="stat-label">Rating Google Maps</div>
+                </div>
+                <div class="stat-card reveal reveal-scale reveal-d-3" data-count="3" data-suffix="">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value"><span class="stat-number">0</span><span class="stat-plus">+</span></div>
+                    <div class="stat-label">Tahun Berkiprah</div>
+                </div>
+                <div class="stat-card reveal reveal-scale reveal-d-4" data-count="50" data-suffix="+">
+                    <div class="stat-icon">🥩</div>
+                    <div class="stat-value"><span class="stat-number">0</span><span class="stat-plus">+</span></div>
+                    <div class="stat-label">Varian Menu</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MENU ===== -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Menu Andalan</span>
+                <h2 class="section-title">Pilihan Paket AYCE</h2>
+                <p class="section-sub">Semua paket sudah include pilihan daging melimpah, sayuran segar, dan side dish khas Korea.</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card featured reveal reveal-left reveal-d-1 tilt-card">
+                    <div class="menu-img grill">
+                        <picture>
+                            <source srcset="assets/images/meat-480w.webp 480w, assets/images/meat-768w.webp 768w, assets/images/meat-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
+                            <source srcset="assets/images/meat-480w.jpg 480w, assets/images/meat-768w.jpg 768w, assets/images/meat-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
+                            <img src="assets/meat.webp" alt="Grilled and Shabu dish" loading="lazy" width="800" height="1200" decoding="async" />
+                        </picture>
+                        <span class="menu-img-overlay"></span>
+                        <span style="position:relative;z-index:1;">🥩🔥</span>
+                    </div>
+                    <div class="menu-body">
+                        <h3>Grilled and Shabu</h3>
+                        <div class="menu-price">Rp 125.000 <small>/ pax</small></div>
+                        <p>Kombinasi sempurna panggangan daging premium dan kuah shabu hangat yang gurih. Best value!</p>
+                        <ul class="menu-features">
+                            <li>Pilihan daging melimpah</li>
+                            <li>Sayuran segar &amp; side dishes khas Korea</li>
+                            <li>Minuman free-flow</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="menu-card reveal reveal-right reveal-d-2 tilt-card">
+                    <div class="menu-img shaby">
+                        <picture>
+                            <source srcset="assets/images/veggies-480w.webp 480w, assets/images/veggies-768w.webp 768w, assets/images/veggies-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
+                            <source srcset="assets/images/veggies-480w.jpg 480w, assets/images/veggies-768w.jpg 768w, assets/images/veggies-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
+                            <img src="assets/veggies.webp" alt="Regular Beef dish" loading="lazy" width="800" height="533" decoding="async" />
+                        </picture>
+                        <span class="menu-img-overlay"></span>
+                        <span style="position:relative;z-index:1;">🍲🥬</span>
+                    </div>
+                    <div class="menu-body">
+                        <h3>Regular Beef</h3>
+                        <div class="menu-price">Rp 100.000 <small>/ pax</small></div>
+                        <p>Pilihan hemat buat kamu yang mau fokus menikmati kelembutan potongan daging reguler pilihan.</p>
+                        <ul class="menu-features">
+                            <li>Pilihan kuah sup beragam</li>
+                            <li>Saus racikan spesial</li>
+                            <li>Es krim penutup yang menyegarkan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Kata Mereka</span>
+                <h2 class="section-title">Apa Kata Pelanggan?</h2>
+                <p class="section-sub">Pengalaman nyata dari mereka yang sudah makan di Sogogi Buaran.</p>
+            </div>
+            <div class="testi-carousel-wrapper reveal">
+                <button class="testi-carousel-btn prev" id="testiPrev" aria-label="Sebelumnya">‹</button>
+                <button class="testi-carousel-btn next" id="testiNext" aria-label="Selanjutnya">›</button>
+                <div class="testi-carousel-track" id="testiTrack">
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <blockquote>"Tempat makan murah meriah, budget anak kampus pun cocok banget di sini. Harganya pas, pilihan dagingnya mantap!"</blockquote>
+                        <div class="testi-author">
+                            <div class="testi-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-hover));">R</div>
+                            <div>
+                                <div class="testi-name">Rian</div>
+                                <div class="testi-role">Mahasiswa Universitas Sekitar</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <blockquote>"Suasana di cabang Buaran oke sih, jarak antar mejanya luas jadi gak sumpek. Tempatnya adem banget meskipun lagi penuh."</blockquote>
+                        <div class="testi-author">
+                            <div class="testi-avatar" style="background:linear-gradient(135deg,var(--secondary),#e0893c);">L</div>
+                            <div>
+                                <div class="testi-name">Lelly F.</div>
+                                <div class="testi-role">Local Guide</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <blockquote>"Tempatnya bersih, pelayanannya ramah kalau kita booking duluan. Pas banget buat makan bareng keluarga besar pas akhir pekan."</blockquote>
+                        <div class="testi-author">
+                            <div class="testi-avatar" style="background:linear-gradient(135deg,#6c5ce7,#5a4bd1);">S</div>
+                            <div>
+                                <div class="testi-name">Siti M.</div>
+                                <div class="testi-role">Ibu Rumah Tangga</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-dots" id="testiDots">
+                <button class="testi-dot active" data-index="0" aria-label="Testimoni 1"></button>
+                <button class="testi-dot" data-index="1" aria-label="Testimoni 2"></button>
+                <button class="testi-dot" data-index="2" aria-label="Testimoni 3"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.25"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-main)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Suasana</span>
+                <h2 class="section-title">Gallery &amp; Suasana</h2>
+                <p class="section-sub">Rasakan atmosfer Sogogi Buaran yang luas, adem, dan nyaman.</p>
+            </div>
+            <div class="gallery-grid reveal">
+                <div class="gallery-item reveal reveal-scale reveal-d-1">
+                    <span class="gallery-bg"></span>
+                    <picture>
+                        <source srcset="assets/images/interior-480w.webp 480w, assets/images/interior-768w.webp 768w, assets/images/interior-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
+                        <source srcset="assets/images/interior-480w.jpg 480w, assets/images/interior-768w.jpg 768w, assets/images/interior-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
+                        <img src="assets/interior.webp" alt="Area Makan Utama Sogogi Buaran" loading="lazy" width="800" height="533" decoding="async" data-full="assets/interior.webp" />
+                    </picture>
+                    <span class="gallery-overlay"></span>
+                    <span class="gallery-zoom">🔍</span>
+                    <span class="gallery-label">Area Makan Utama — Luas & Ber-AC</span>
+                </div>
+                <div class="gallery-item reveal reveal-scale reveal-d-2">
+                    <span class="gallery-bg"></span>
+                    <picture>
+                        <source srcset="assets/images/meat-480w.webp 480w, assets/images/meat-768w.webp 768w, assets/images/meat-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
+                        <source srcset="assets/images/meat-480w.jpg 480w, assets/images/meat-768w.jpg 768w, assets/images/meat-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
+                        <img src="assets/meat.webp" alt="Daging Premium" loading="lazy" width="800" height="1200" decoding="async" data-full="assets/meat.webp" />
+                    </picture>
+                    <span class="gallery-overlay"></span>
+                    <span class="gallery-zoom">🔍</span>
+                    <span class="gallery-label">Daging Premium</span>
+                </div>
+                <div class="gallery-item reveal reveal-scale reveal-d-3">
+                    <span class="gallery-bg"></span>
+                    <picture>
+                        <source srcset="assets/images/veggies-480w.webp 480w, assets/images/veggies-768w.webp 768w, assets/images/veggies-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
+                        <source srcset="assets/images/veggies-480w.jpg 480w, assets/images/veggies-768w.jpg 768w, assets/images/veggies-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
+                        <img src="assets/veggies.webp" alt="Sayuran Segar" loading="lazy" width="800" height="533" decoding="async" data-full="assets/veggies.webp" />
+                    </picture>
+                    <span class="gallery-overlay"></span>
+                    <span class="gallery-zoom">🔍</span>
+                    <span class="gallery-label">Sayuran Segar</span>
+                </div>
+                <div class="gallery-item reveal reveal-scale reveal-d-4">
+                    <span class="gallery-bg"></span>
+                    <picture>
+                        <source srcset="assets/images/sidedish-480w.webp 480w, assets/images/sidedish-768w.webp 768w, assets/images/sidedish-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
+                        <source srcset="assets/images/sidedish-480w.jpg 480w, assets/images/sidedish-768w.jpg 768w, assets/images/sidedish-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
+                        <img src="assets/sidedish.webp" alt="Side Dish Korea" loading="lazy" width="800" height="600" decoding="async" data-full="assets/sidedish.webp" />
+                    </picture>
+                    <span class="gallery-overlay"></span>
+                    <span class="gallery-zoom">🔍</span>
+                    <span class="gallery-label">Side Dish Korea</span>
+                </div>
+                <div class="gallery-item reveal reveal-scale reveal-d-5">
+                    <span class="gallery-bg"></span>
+                    <picture>
+                        <source srcset="assets/images/icecream-480w.webp 480w, assets/images/icecream-768w.webp 768w, assets/images/icecream-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
+                        <source srcset="assets/images/icecream-480w.jpg 480w, assets/images/icecream-768w.jpg 768w, assets/images/icecream-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
+                        <img src="assets/icecream.webp" alt="Es Krim Penutup" loading="lazy" width="800" height="1423" decoding="async" data-full="assets/icecream.webp" />
+                    </picture>
+                    <span class="gallery-overlay"></span>
+                    <span class="gallery-zoom">🔍</span>
+                    <span class="gallery-label">Es Krim Penutup</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.25"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== RESERVASI ===== -->
+    <section class="reservation" id="reservation">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Reservasi</span>
+                <h2 class="section-title">Amankan Meja Kamu Sekarang! 🥩</h2>
+                <p class="section-sub">Isi form di bawah, dan kami akan konfirmasi reservasi kamu via WhatsApp dalam hitungan menit.</p>
+            </div>
+            <div class="reservation-wrapper">
+                <div class="reservation-info reveal reveal-left reveal-d-1">
+                    <h3>Kenapa Reservasi di Sini?</h3>
+                    <p>Khusus hari Sabtu dan jam makan malam, tempat kami selalu penuh. Dengan reservasi, kamu gak perlu antre dan meja sudah siap begitu kamu datang!</p>
+                    <div class="info-badge">
+                        <div class="badge-icon" style="background:rgba(217,4,41,0.1);color:var(--primary);">🕐</div>
+                        <div>
+                            <strong>Jam Operasional</strong>
+                            <span>Buka Setiap Hari • Mulai Pukul 12.00 WIB</span>
+                        </div>
+                    </div>
+                    <div class="info-badge">
+                        <div class="badge-icon" style="background:rgba(244,162,97,0.15);color:#c4813e;">📍</div>
+                        <div>
+                            <strong>Lokasi</strong>
+                            <span>Samping BAKS Coffee, Jl. Buaran Raya No.104-108, Duren Sawit</span>
+                        </div>
+                    </div>
+                    <div class="info-badge">
+                        <div class="badge-icon" style="background:rgba(0,184,148,0.1);color:#00b894;">📞</div>
+                        <div>
+                            <strong>Telepon</strong>
+                            <span>(021) 29195053</span>
+                        </div>
+                    </div>
+                    <div class="info-badge">
+                        <div class="badge-icon" style="background:rgba(108,92,231,0.1);color:#6c5ce7;">👥</div>
+                        <div>
+                            <strong>Kapasitas</strong>
+                            <span>Cocok untuk 2–10+ orang • Tersedia meja besar untuk rombongan</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="reservation-form reveal reveal-right reveal-d-2" id="reservationForm">
+                    <div class="form-title">Form Reservasi</div>
+                    <div class="form-sub">Semua field wajib diisi ya 😊</div>
+
+                    <div class="form-group" data-field="name">
+                        <label for="resName">Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="resName" name="name" placeholder="Contoh: Budi Santoso" required />
+                        <div class="error-message">⚠️ Masukkan nama lengkap minimal 3 karakter</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" data-field="phone">
+                            <label for="resPhone">Nomor WhatsApp <span class="required">*</span></label>
+                            <input type="tel" id="resPhone" name="phone" placeholder="0812xxxxxxxx" required />
+                            <div class="error-message">⚠️ Masukkan nomor WhatsApp valid (08xx atau +62xx)</div>
+                        </div>
+                        <div class="form-group" data-field="guests">
+                            <label for="resGuests">Jumlah Orang <span class="required">*</span></label>
+                            <input type="number" id="resGuests" name="guests" min="1" max="30" placeholder="Contoh: 4" required />
+                            <div class="error-message">⚠️ Jumlah orang minimal 1 dan maksimal 30</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" data-field="date">
+                            <label for="resDate">Tanggal <span class="required">*</span></label>
+                            <input type="date" id="resDate" name="date" required />
+                            <div class="error-message">⚠️ Pilih tanggal yang akan datang (hari ini atau setelahnya)</div>
+                        </div>
+                        <div class="form-group" data-field="time">
+                            <label for="resTime">Waktu <span class="required">*</span></label>
+                            <input type="time" id="resTime" name="time" value="18:00" required />
+                            <div class="error-message">⚠️ Pilih waktu reservasi</div>
+                        </div>
+                    </div>
+
+                    <div class="availability-section" id="availSection" style="display:none;">
+                        <div class="avail-header">
+                            <span class="avail-title">📊 Ketersediaan Waktu</span>
+                            <span class="avail-badge" id="availBadge">Memeriksa...</span>
+                        </div>
+                        <div class="avail-slots" id="availSlots">
+                            <div class="avail-loading">Memeriksa ketersediaan...</div>
+                        </div>
+                        <div class="date-avail-note" id="availNote">
+                            💡 <strong>Tip:</strong> Akhir pekan lebih cepat penuh. Reservasi H-3 untuk jam favorit kamu!
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-field="package">
+                        <label>Pilihan Paket <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="package" value="Grilled & Shabu - Rp125.000" checked />
+                                <span>🥩🔥 Grilled &amp; Shabu</span>
+                                <span class="radio-price">Rp125.000</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="package" value="Regular Beef - Rp100.000" />
+                                <span>🍲🥬 Regular Beef</span>
+                                <span class="radio-price">Rp100.000</span>
+                            </label>
+                        </div>
+                        <div class="error-message">⚠️ Pilih salah satu paket</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resNotes">Catatan Tambahan</label>
+                        <textarea id="resNotes" name="notes" placeholder="Contoh: Ada yang ulang tahun, minta meja dekat AC, dll." rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        💬 Kirim Reservasi via WhatsApp
+                    </button>
+                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:12px;">
+                        Data kamu aman. Kami hanya menggunakan WhatsApp untuk konfirmasi reservasi.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--text)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== FOOTER / CONTACT ===== -->
+    <footer id="contact" class="reveal reveal-up reveal-d-1">
+        <div class="container">
+            <div class="reveal reveal-up reveal-d-1">
+                <h3>Sudah Siap Amankan Mejamu? 🔥</h3>
+                <p style="margin-bottom:20px;max-width:460px;">
+                    Khusus hari Sabtu dan jam makan malam, tempat kami sangat ramai.
+                    Amankan tempatmu sekarang dengan melakukan reservasi!
+                </p>
+                <div class="footer-info reveal reveal-up reveal-d-2">
+                    <p><strong>📍 Alamat:</strong><br>
+                    Samping BAKS Coffee, Jl. Buaran Raya No.104-108 Blok A, RT.1/RW.14,<br>
+                    Duren Sawit, Kec. Duren Sawit, Kota Jakarta Timur, DKI Jakarta 13470</p>
+                </div>
+                <div class="footer-info reveal reveal-up reveal-d-3">
+                    <p><strong>📞 Telepon:</strong> (021) 29195053</p>
+                </div>
+                <div class="footer-info reveal reveal-up reveal-d-4">
+                    <p><strong>🕐 Jam Operasional:</strong><br>Buka Setiap Hari, Mulai Pukul 12.00 WIB</p>
+                </div>
+                <div class="footer-cta reveal reveal-up reveal-d-5">
+                    <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="btn btn-wa" style="display:inline-flex;">
+                        💬 Chat WhatsApp Reservasi
+                    </a>
+                </div>
+            </div>
+            <div class="reveal reveal-up reveal-d-2">
+                <h4>Lokasi Kami</h4>
+                <p style="margin-bottom:12px;">QWHF+V2 Duren Sawit, Jakarta Timur</p>
+                <div class="footer-map reveal reveal-up reveal-d-3">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1295!2d106.9197!3d-6.2291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698d4f5b2b2d2f%3A0x5b2b2d2f5b2b2d2f!2sJl.%20Buaran%20Raya%20No.104-108!5e0!3m2!1sid!2sid!4v1700000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Sogogi Buaran"></iframe>
+                </div>
+            </div>
+            <div class="footer-bottom reveal reveal-up reveal-d-3">
+                <p>&copy; 2026 Sogogi Shabu &amp; Grill Buaran. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SUCCESS MODAL ===== -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+            <button class="modal-close" id="modalClose" aria-label="Tutup modal">✕</button>
+            <div class="modal-check">✓</div>
+            <h3 id="modalTitle">Reservasi Terkirim! 🎉</h3>
+            <p class="modal-sub">Data reservasi kamu sudah kami terima. Yuk lanjutkan via WhatsApp untuk konfirmasi cepat!</p>
+            <div class="modal-details" id="modalDetails">
+                <div class="detail-row">
+                    <span class="detail-label">👤 Nama</span>
+                    <span class="detail-value" id="modalName">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">📱 WhatsApp</span>
+                    <span class="detail-value" id="modalPhone">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">👥 Orang</span>
+                    <span class="detail-value" id="modalGuests">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">📅 Tanggal</span>
+                    <span class="detail-value" id="modalDate">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">⏰ Waktu</span>
+                    <span class="detail-value" id="modalTime">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🥩 Paket</span>
+                    <span class="detail-value" id="modalPackage">—</span>
+                </div>
+                <div class="detail-row" id="modalNotesRow" style="display:none;">
+                    <span class="detail-label">📝 Catatan</span>
+                    <span class="detail-value" id="modalNotes">—</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <a href="#" class="btn btn-wa" id="modalWaBtn" target="_blank" rel="noopener" style="display:inline-flex;">
+                    💬 Buka WhatsApp
+                </a>
+                <button class="btn-outline-sm" id="modalDone">Nanti Saja, Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== GALLERY LIGHTBOX ===== -->
+    <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Galeri foto">
+        <button class="lb-close" id="lbClose" aria-label="Tutup galeri">✕</button>
+        <button class="lb-prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+        <button class="lb-next" id="lbNext" aria-label="Selanjutnya">›</button>
+
+        <div class="lb-swipe-hint">⟷</div>
+
+        <div class="lb-image-wrapper" id="lbImageWrapper">
+            <div class="lb-placeholder" id="lbPlaceholder">🖼️</div>
+            <img id="lbImage" src="" alt="" style="display:none;" />
+        </div>
+
+        <div class="lb-bottom">
+            <span class="lb-counter" id="lbCounter"></span>
+            <span class="lb-caption" id="lbCaption"></span>
+        </div>
+    </div>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <a href="#" class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</a>
+
+    <!-- ===== MOBILE STICKY CTA ===== -->
+    <div class="mobile-sticky-btm">
+        <a href="#reservation" class="btn btn-primary" style="flex:1;justify-content:center;">📅 Reservasi Sekarang</a>
+        <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="btn btn-wa" style="flex:1;justify-content:center;">💬 Chat WhatsApp</a>
+    </div>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="wa-float" aria-label="Reservasi via WhatsApp">
+        <span class="pulse"></span>
+        💬
+    </a>
+
+    <!-- ===== JavaScript ===== -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

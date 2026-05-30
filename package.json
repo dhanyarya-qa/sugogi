@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/index.html --wait=100",
+    "dev:serve": "npx serve . --port 3000"
+  },
+  "dependencies": {
+    "agentic-flow": "^2.0.13"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "typescript": "^6.0.3"
+  }
+}

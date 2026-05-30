@@ -1,0 +1,55 @@
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Environment ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Build Outputs ---
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Ruflo Runtime ---
+# Database files (regenerated on init)
+.swarm/
+ruvector.db
+
+# Ruflo .claude-flow (ignore everything except config files)
+.claude-flow/*
+!.claude-flow/config.yaml
+!.claude-flow/CAPABILITIES.md
+!.claude-flow/hooks/
+!.claude-flow/workflows/
+!.claude-flow/security/
+
+# --- Coverage / Reports ---
+coverage/
+.nyc_output/
+
+# --- Generated Assets ---
+assets/images/
