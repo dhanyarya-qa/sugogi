@@ -189,6 +189,7 @@
         }
         .testi-dot:hover {
             background: var(--text-muted);
+            transform: scale(1.2);
         }
         .testi-carousel-btn {
             position: absolute;
@@ -210,9 +211,10 @@
             z-index: 2;
         }
         .testi-carousel-btn:hover {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             color: #fff;
             border-color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
         }
         .testi-carousel-btn.prev { left: -12px; }
         .testi-carousel-btn.next { right: -12px; }
@@ -260,8 +262,8 @@
             transform: scaleX(1);
         }
         .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
         }
         .stat-icon {
             font-size: 2rem;

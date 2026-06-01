@@ -65,7 +65,7 @@
     <!-- ===== PWA Manifest ===== -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#D90429">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sogogi Buaran">
 </head>
@@ -75,12 +75,21 @@
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- ===== NAVBAR ===== -->
+    <!-- ===== #16: DAILY UPDATE BAR ===== -->
+    <div class="daily-bar" id="dailyBar">
+        <div class="container">
+            <span class="daily-text">📢 🔥 Hari ini: Free Tteokbokki untuk 10 pelanggan pertama!</span>
+            <button class="daily-close" id="dailyBarToggle" aria-label="Tutup">✕</button>
+        </div>
+    </div>
+
     <nav id="navbar">
         <div class="container nav-inner">
             <a href="#" class="nav-logo">
                 <div class="logo-icon">🥩</div>
                 <div>Sogogi <span>Buaran</span></div>
             </a>
+            <div class="nav-occupancy" id="occupancyBadge" title="Cek ketersediaan meja" style="display:flex;align-items:center;"></div>
             <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema" title="Ganti tema terang/gelap">🌙</button>
             <button class="hamburger-btn" id="mobileToggle" aria-label="Menu">
                 <span class="bar"></span>
@@ -91,8 +100,9 @@
                 <a href="#home">Home</a>
                 <a href="#promo">Promo</a>
                 <a href="#perks">Kenapa Kami</a>
-                <a href="#menu">Menu Andalan</a>
-                <a href="#testimonials">Kata Mereka</a>
+                <a href="#kalkulator">Kalkulator Harga</a>
+                <a href="#menu">Menu</a>
+                <a href="#moodpicker">Cari Menu</a>
                 <a href="#reservation">Reservasi</a>
                 <a href="#contact">Lokasi</a>
                 <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="nav-cta-wa">
@@ -132,11 +142,7 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-img-placeholder">
-                    <picture>
-                        <source srcset="assets/images/hero-480w.webp 480w, assets/images/hero-768w.webp 768w, assets/images/hero-1024w.webp 1024w, assets/images/hero-1200w.webp 1200w" sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, 1200px" type="image/webp" />
-                        <source srcset="assets/images/hero-480w.jpg 480w, assets/images/hero-768w.jpg 768w, assets/images/hero-1024w.jpg 1024w, assets/images/hero-1200w.jpg 1200w" sizes="(max-width: 480px) 480px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, 1200px" type="image/jpeg" />
-                        <img src="assets/hero.webp" alt="Sogogi Shabu & Grill AYCE" loading="eager" width="1200" height="800" decoding="async" fetchpriority="high" class="hero-parallax-img" />
-                    </picture>
+                    <img src="assets/hero.webp" alt="Sogogi Shabu & Grill AYCE" loading="eager" width="1200" height="800" decoding="async" fetchpriority="high" class="hero-parallax-img" />
                     <span class="overlay"></span>
                     <span class="steam"></span>
                     <span class="steam"></span>
@@ -163,6 +169,19 @@
                 <span class="section-label">Promo Spesial</span>
                 <h2 class="section-title">Promo &amp; Diskon Terbatas! 🔥</h2>
                 <p class="section-sub">Jangan lewatkan kesempatan makan AYCE lebih hemat dengan promo-promo spesial berikut.</p>
+                <!-- ===== #3: COUNTDOWN TIMER ===== -->
+                <div class="reveal reveal-up">
+                    <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">⏰ Promo mingguan berakhir dalam:</p>
+                    <div class="promo-timer-wrap" id="promoTimer">
+                        <div class="timer-unit"><span class="timer-num">--</span><span class="timer-label">Hari</span></div>
+                        <div class="timer-sep">:</div>
+                        <div class="timer-unit"><span class="timer-num">--</span><span class="timer-label">Jam</span></div>
+                        <div class="timer-sep">:</div>
+                        <div class="timer-unit"><span class="timer-num">--</span><span class="timer-label">Menit</span></div>
+                        <div class="timer-sep">:</div>
+                        <div class="timer-unit"><span class="timer-num">--</span><span class="timer-label">Detik</span></div>
+                    </div>
+                </div>
             </div>
             <div class="promo-grid">
                 <div class="promo-card reveal reveal-up reveal-d-1">
@@ -273,58 +292,822 @@
         </div>
     </section>
 
+    <!-- ===== KALKULATOR HARGA & GROUP BILL (#2, #23) ===== -->
+    <section class="perks" id="kalkulator" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">💰 Kalkulator Harga</span>
+                <h2 class="section-title">Hitung Estimasi Biaya Makan 🧮</h2>
+                <p class="section-sub">Masukkan paket dan jumlah orang untuk lihat estimasi total termasuk pajak &amp; service charge.</p>
+            </div>
+            <div class="kalkulator-wrap reveal reveal-up">
+                <div class="kalkulator-form" id="hargaKalkulator">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pilihan Paket</label>
+                            <select id="kalkulator-paket">
+                                <option value="regular">🍲 Regular Beef — Rp100.000</option>
+                                <option value="grilled" selected>🥩🔥 Grilled &amp; Shabu — Rp125.000</option>
+                                <option value="wagyu">👑 Premium Wagyu — Rp160.000</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Jumlah Orang</label>
+                            <input type="number" id="kalkulator-orang" value="2" min="1" max="30" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Durasi Makan (menit)</label>
+                            <select id="kalkulator-durasi">
+                                <option value="60">60 menit (Cepat)</option>
+                                <option value="90" selected>90 menit (Normal)</option>
+                                <option value="120">120 menit (+Rp25rb/30menit)</option>
+                                <option value="150">150 menit (+Rp50rb/30menit)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display:flex;align-items:flex-end;">
+                            <button class="btn btn-primary" id="kalkulator-hitung" style="width:100%;justify-content:center;padding:12px;">🧮 Hitung Total</button>
+                        </div>
+                    </div>
+                    <div class="calc-result" id="kalkulator-result" style="display:none;"></div>
+                </div>
+            </div>
+            <p style="text-align:center;margin-top:12px;font-size:0.78rem;color:var(--text-muted);">💡 Estimasi termasuk PPN 10% + service charge 5%. Overtime charge Rp25rb/30menit/orang.</p>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== MOOD PICKER (#13) ===== -->
+    <section class="perks" id="moodpicker" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">😋 Cari Menu</span>
+                <h2 class="section-title">Lagi Pengen Makan Apa?</h2>
+                <p class="section-sub">Pilih mood kamu, dan kami rekomendasikan menu yang pas! 🎯</p>
+            </div>
+            <div class="mood-grid reveal reveal-up" id="moodPicker">
+                <button class="mood-btn" data-mood="pedas">
+                    <span class="mood-emoji">🌶️</span>
+                    <span class="mood-label">Pedas</span>
+                </button>
+                <button class="mood-btn" data-mood="berkuah">
+                    <span class="mood-emoji">🍲</span>
+                    <span class="mood-label">Berkuah</span>
+                </button>
+                <button class="mood-btn" data-mood="bbq">
+                    <span class="mood-emoji">🔥</span>
+                    <span class="mood-label">BBQ</span>
+                </button>
+                <button class="mood-btn" data-mood="manis">
+                    <span class="mood-emoji">🍦</span>
+                    <span class="mood-label">Manis</span>
+                </button>
+                <button class="mood-btn" data-mood="segar">
+                    <span class="mood-emoji">🥗</span>
+                    <span class="mood-label">Segar</span>
+                </button>
+                <button class="mood-btn" data-mood="hemat">
+                    <span class="mood-emoji">👛</span>
+                    <span class="mood-label">Hemat</span>
+                </button>
+            </div>
+            <div class="mood-result" id="moodResult" style="display:none;"></div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #12: SHABU TIMER ===== -->
+    <section class="perks" id="shabuTimerSection" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">⏱️ Shabu Timer</span>
+                <h2 class="section-title">Timer Makan AYCE ⏰</h2>
+                <p class="section-sub">Pantau durasi makan AYCE kamu biar nggak kehabisan waktu! 90 menit, gas terus! 🔥</p>
+            </div>
+            <div class="timer-section reveal reveal-up" id="shabuTimer">
+                <div class="timer-display" id="timerDisplay">90:00</div>
+                <div class="timer-progress-wrap">
+                    <div class="timer-progress" id="timerProgress"></div>
+                </div>
+                <div class="timer-status" id="timerStatus">🔥 Saatnya makan! Mulai timer-nya!</div>
+                <div class="timer-actions">
+                    <button class="btn btn-primary" id="timerStart" style="padding:12px 28px;">▶️ Mulai Makan!</button>
+                    <button class="btn btn-outline" id="timerReset" style="padding:12px 20px;">🔄 Reset</button>
+                    <button class="timer-quick-btn" data-minutes="60">⏱️ 60 min</button>
+                    <button class="timer-quick-btn" data-minutes="90" style="border-color:var(--primary);color:var(--primary);">⏱️ 90 min</button>
+                    <button class="timer-quick-btn" data-minutes="120">⏱️ 120 min</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #14: SOGOGI SUIT MINI GAME ===== -->
+    <section class="perks" id="sogogiSuitSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">🕹️ Mini Game</span>
+                <h2 class="section-title">Sogogi Suit 🎮</h2>
+                <p class="section-sub">Adu suit dengan bot Sogogi! Kalau menang, dapet diskon Rp5rb buat next visit! 🎉</p>
+            </div>
+            <div class="suit-section reveal reveal-up" id="sogogiSuit">
+                <div class="suit-arena">
+                    <div class="suit-player">
+                        <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);">🧑 Kamu</span>
+                        <div class="suit-hand" id="suitPlayer">✊</div>
+                    </div>
+                    <div class="suit-vs">VS</div>
+                    <div class="suit-bot">
+                        <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);">🤖 Bot</span>
+                        <div class="suit-hand" id="suitBot">✊</div>
+                    </div>
+                </div>
+                <div class="suit-choices">
+                    <button class="suit-choice" data-choice="batu">✊</button>
+                    <button class="suit-choice" data-choice="gunting">✌️</button>
+                    <button class="suit-choice" data-choice="kertas">✋</button>
+                </div>
+                <div class="suit-score" id="suitScore">🧑 Kamu: 0 | 🤖 Bot: 0</div>
+                <div class="suit-result" id="suitResult"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== MENU ===== -->
     <section class="menu" id="menu">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-label">Menu Andalan</span>
-                <h2 class="section-title">Pilihan Paket AYCE</h2>
-                <p class="section-sub">Semua paket sudah include pilihan daging melimpah, sayuran segar, dan side dish khas Korea.</p>
+                <h2 class="section-title">Pilihan Menu AYCE</h2>
+                <p class="section-sub">Jelajahi semua paket dan menu andalan Sogogi Buaran — dari daging premium hingga dessert manis</p>
             </div>
-            <div class="menu-grid">
-                <div class="menu-card featured reveal reveal-left reveal-d-1 tilt-card">
-                    <div class="menu-img grill">
-                        <picture>
-                            <source srcset="assets/images/meat-480w.webp 480w, assets/images/meat-768w.webp 768w, assets/images/meat-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
-                            <source srcset="assets/images/meat-480w.jpg 480w, assets/images/meat-768w.jpg 768w, assets/images/meat-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
-                            <img src="assets/meat.webp" alt="Grilled and Shabu dish" loading="lazy" width="800" height="1200" decoding="async" />
-                        </picture>
-                        <span class="menu-img-overlay"></span>
-                        <span style="position:relative;z-index:1;">🥩🔥</span>
+
+            <!-- ===== MENU TABS ===== -->
+            <div class="menu-tabs reveal" role="tablist">
+                <button class="menu-tab active" role="tab" aria-selected="true" data-tab="packages" aria-controls="menu-packages">
+                    <span class="tab-icon">🥩</span>
+                    <span class="tab-label">Paket AYCE</span>
+                </button>
+                <button class="menu-tab" role="tab" aria-selected="false" data-tab="meat" aria-controls="menu-meat">
+                    <span class="tab-icon">🥓</span>
+                    <span class="tab-label">Daging Premium</span>
+                </button>
+                <button class="menu-tab" role="tab" aria-selected="false" data-tab="sides" aria-controls="menu-sides">
+                    <span class="tab-icon">🥟</span>
+                    <span class="tab-label">Side Dish</span>
+                </button>
+                <button class="menu-tab" role="tab" aria-selected="false" data-tab="drinks" aria-controls="menu-drinks">
+                    <span class="tab-icon">🥤</span>
+                    <span class="tab-label">Minuman</span>
+                </button>
+                <button class="menu-tab" role="tab" aria-selected="false" data-tab="dessert" aria-controls="menu-dessert">
+                    <span class="tab-icon">🍦</span>
+                    <span class="tab-label">Dessert</span>
+                </button>
+            </div>
+
+            <!-- ===== TAB 1: PAKET AYCE ===== -->
+            <div class="menu-tab-content active" id="menu-packages" role="tabpanel">
+                <div class="menu-pricing-grid">
+
+                    <div class="menu-pricing-card reveal reveal-up reveal-d-1 tilt-card">
+                        <div class="pricing-card-bg"></div>
+                        <div class="pricing-header">
+                            <div class="pricing-icon">🍲🥬</div>
+                            <h3>Regular Beef</h3>
+                            <div class="pricing-amount">
+                                <span class="price-number">Rp100.000</span>
+                                <span class="price-per">/ pax</span>
+                            </div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li class="included">🍲 Shabu-Shabu pilihan</li>
+                                <li class="included">🥩 Daging sapi reguler</li>
+                                <li class="included">🥬 Sayuran segar + bakso</li>
+                                <li class="included">🍚 Nasi putih + kuah 1 pilihan</li>
+                                <li class="included">🍦 Es krim free-flow</li>
+                                <li class="not-included">❌ Daging premium</li>
+                                <li class="not-included">❌ Grill & BBQ</li>
+                                <li class="not-included">❌ Minuman free-flow</li>
+                            </ul>
+                            <a href="#reservation" class="btn btn-outline pricing-cta">Pilih Paket</a>
+                        </div>
                     </div>
-                    <div class="menu-body">
-                        <h3>Grilled and Shabu</h3>
-                        <div class="menu-price">Rp 125.000 <small>/ pax</small></div>
-                        <p>Kombinasi sempurna panggangan daging premium dan kuah shabu hangat yang gurih. Best value!</p>
-                        <ul class="menu-features">
-                            <li>Pilihan daging melimpah</li>
-                            <li>Sayuran segar &amp; side dishes khas Korea</li>
-                            <li>Minuman free-flow</li>
-                        </ul>
+
+                    <div class="menu-pricing-card featured reveal reveal-up reveal-d-2 tilt-card">
+                        <div class="pricing-card-bg"></div>
+                        <span class="pricing-badge">⭐ BEST VALUE</span>
+                        <span class="pricing-popular">Paling Populer</span>
+                        <div class="pricing-header">
+                            <div class="pricing-icon">🥩🔥</div>
+                            <h3>Grilled &amp; Shabu</h3>
+                            <div class="pricing-amount">
+                                <span class="price-number">Rp125.000</span>
+                                <span class="price-per">/ pax</span>
+                            </div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li class="included">🔥 Grill + 🍲 Shabu (2 in 1)</li>
+                                <li class="included">🥩 Daging premium (Brisket, Shortplate)</li>
+                                <li class="included">🥬 Sayuran segar + bakso + tofu</li>
+                                <li class="included">🍚 Nasi + kuah 2 pilihan</li>
+                                <li class="included">🥟 Side dish Korea (Kimchi, Danmuji)</li>
+                                <li class="included">🥤 Minuman free-flow (es teh, lemon tea)</li>
+                                <li class="included">🍦 Es krim free-flow</li>
+                                <li class="included">🥣 Saus racikan spesial</li>
+                            </ul>
+                            <a href="#reservation" class="btn btn-primary pricing-cta">Pilih Paket</a>
+                        </div>
+                    </div>
+
+                    <div class="menu-pricing-card reveal reveal-up reveal-d-3 tilt-card">
+                        <div class="pricing-card-bg"></div>
+                        <span class="pricing-badge premium">👑 PREMIUM</span>
+                        <div class="pricing-header">
+                            <div class="pricing-icon">🥩✨</div>
+                            <h3>Premium Wagyu</h3>
+                            <div class="pricing-amount">
+                                <span class="price-number">Rp160.000</span>
+                                <span class="price-per">/ pax</span>
+                            </div>
+                        </div>
+                        <div class="pricing-body">
+                            <ul class="pricing-features">
+                                <li class="included">🔥 Grill + 🍲 Shabu (2 in 1)</li>
+                                <li class="included">🥩 Wagyu beef + Brisket + Shortplate</li>
+                                <li class="included">🐷 Pork Belly + Chicken Teriyaki</li>
+                                <li class="included">🥬 Sayuran segar + tofu + enoki</li>
+                                <li class="included">🍚 Nasi + kuah 3 pilihan</li>
+                                <li class="included">🥟 Side dish premium + Tteokbokki</li>
+                                <li class="included">🥤 Minuman free-flow (ALL)</li>
+                                <li class="included">🍦 Es krim + Mochi + Bingsu</li>
+                                <li class="included">🥣 Saus racikan spesial + Gyoza</li>
+                            </ul>
+                            <a href="#reservation" class="btn btn-primary pricing-cta">Pilih Paket</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ===== TAB 2: DAGING PREMIUM ===== -->
+            <div class="menu-tab-content" id="menu-meat" role="tabpanel">
+                <p class="menu-tab-desc">Pilihan daging terbaik kami — cocok untuk paket Grilled &amp; Shabu dan Premium Wagyu</p>
+                <div class="menu-items-grid">
+                    <div class="menu-item-card reveal reveal-up reveal-d-1">
+                        <div class="menu-item-img beef">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=225&fit=crop" alt="Beef Brisket" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Beef Brisket</h4>
+                                <span class="menu-item-tag best">Best Seller</span>
+                            </div>
+                            <p>Irisan tipis brisket yang lembut — cukup celup 5 detik di kuah shabu</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-2">
+                        <div class="menu-item-img beef">
+                            <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=225&fit=crop" alt="Short Plate" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Short Plate</h4>
+                                <span class="menu-item-tag popular">Popular</span>
+                            </div>
+                            <p>Potongan short plate dengan marbling sempurna — juicy dan empuk</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-3">
+                        <div class="menu-item-img chicken">
+                            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=225&fit=crop" alt="Chicken Teriyaki" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Chicken Teriyaki</h4>
+                                <span class="menu-item-tag">Halal</span>
+                            </div>
+                            <p>Daging ayam pilihan dengan saus teriyaki manis gurih — favorit semua usia</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-4">
+                        <div class="menu-item-img mushroom">
+                            <img src="https://images.unsplash.com/photo-1547264403-4342e205aeb6?w=400&h=225&fit=crop" alt="Enoki Mushroom" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Enoki Mushroom</h4>
+                                <span class="menu-item-tag vege">Vegetarian</span>
+                            </div>
+                            <p>Jamur enoki segar — cocok dipanggang atau dicelup di kuah shabu hangat</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-5">
+                        <div class="menu-item-img pork">
+                            <img src="https://images.unsplash.com/photo-1625041266260-8344c5e65a14?w=400&h=225&fit=crop" alt="Pork Belly" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Pork Belly</h4>
+                                <span class="menu-item-tag popular">Favorite</span>
+                            </div>
+                            <p>Samgyeopsal asli! Pork belly tebal dengan lemak manis — panggang sampai garing</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-6">
+                        <div class="menu-item-img wagyu">
+                            <img src="https://images.unsplash.com/photo-1623177627522-7e4a114f1b4f?w=400&h=225&fit=crop" alt="Wagyu Beef" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Wagyu Beef</h4>
+                                <span class="menu-item-tag best">Premium</span>
+                            </div>
+                            <p>Daging wagyu premium with marbling excellence — meleleh di mulut!</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-7">
+                        <div class="menu-item-img beef">
+                            <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&h=225&fit=crop" alt="Beef Bulgogi" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Beef Bulgogi</h4>
+                                <span class="menu-item-tag popular">Korea Favorit</span>
+                            </div>
+                            <p>Daging sapi iris tipis dengan bumbu bulgogi manis gurih khas Korea — di-grill makin nikmat!</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-8">
+                        <div class="menu-item-img beef">
+                            <img src="https://images.unsplash.com/photo-1603048297172-925d1eb0fca8?w=400&h=225&fit=crop" alt="Beef Sirloin" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Beef Sirloin</h4>
+                                <span class="menu-item-tag popular">Premium Cut</span>
+                            </div>
+                            <p>Irisan sirloin premium — tekstur empuk dengan lemak seimbang, cocok untuk shabu & grill</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-9">
+                        <div class="menu-item-img wagyu">
+                            <img src="https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400&h=225&fit=crop" alt="Black Angus" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Black Angus</h4>
+                                <span class="menu-item-tag best">Premium</span>
+                            </div>
+                            <p>Daging Black Angus kelas atas — marbling sempurna, juicy, dan super empuk</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-10">
+                        <div class="menu-item-img chicken">
+                            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=225&fit=crop" alt="Udang Kupas" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Udang Kupas</h4>
+                                <span class="menu-item-tag popular">Seafood</span>
+                            </div>
+                            <p>Udang segar ukuran besar, sudah dikupas — panggang sampai merah kecoklatan!</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-11">
+                        <div class="menu-item-img mushroom">
+                            <img src="https://images.unsplash.com/photo-1594512338165-d0add7117f07?w=400&h=225&fit=crop" alt="Cumi-Cumi" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Cumi-Cumi</h4>
+                                <span class="menu-item-tag popular">Seafood</span>
+                            </div>
+                            <p>Cumi segar siap grill — tekstur kenyal alami, nikmat dicocol saus pedas</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-12">
+                        <div class="menu-item-img beef">
+                            <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=225&fit=crop" alt="Bakso Sapi" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Bakso Sapi</h4>
+                                <span class="menu-item-tag">Shabu</span>
+                            </div>
+                            <p>Bakso sapi kenyal ukuran besar — favorit untuk dicelup ke kuah shabu yang mendidih</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-13">
+                        <div class="menu-item-img chicken">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=225&fit=crop" alt="Fish Tofu" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Fish Tofu</h4>
+                                <span class="menu-item-tag">Shabu</span>
+                            </div>
+                            <p>Tahu ikan lembut yang menyerap kuah shabu — tekstur kenyal dan gurih</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-14">
+                        <div class="menu-item-img pork">
+                            <img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=400&h=225&fit=crop" alt="Sosis dan Nugget" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Sosis &amp; Nugget</h4>
+                                <span class="menu-item-tag">Kids Favorite</span>
+                            </div>
+                            <p>Sosis sapi dan nugget ayam — pilihan favorit si kecil yang tidak suka pedas</p>
+                        </div>
                     </div>
                 </div>
-                <div class="menu-card reveal reveal-right reveal-d-2 tilt-card">
-                    <div class="menu-img shaby">
-                        <picture>
-                            <source srcset="assets/images/veggies-480w.webp 480w, assets/images/veggies-768w.webp 768w, assets/images/veggies-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
-                            <source srcset="assets/images/veggies-480w.jpg 480w, assets/images/veggies-768w.jpg 768w, assets/images/veggies-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
-                            <img src="assets/veggies.webp" alt="Regular Beef dish" loading="lazy" width="800" height="533" decoding="async" />
-                        </picture>
-                        <span class="menu-img-overlay"></span>
-                        <span style="position:relative;z-index:1;">🍲🥬</span>
+            </div>
+
+            <!-- ===== TAB 3: SIDE DISH ===== -->
+            <div class="menu-tab-content" id="menu-sides" role="tabpanel">
+                <p class="menu-tab-desc">Lengkapi pengalaman BBQ-mu dengan side dish khas Korea yang autentik</p>
+                <div class="menu-items-grid">
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-1">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Kimchi</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Kimchi fermented khas Korea — pedas segar membersihkan lidah</p>
+                        </div>
                     </div>
-                    <div class="menu-body">
-                        <h3>Regular Beef</h3>
-                        <div class="menu-price">Rp 100.000 <small>/ pax</small></div>
-                        <p>Pilihan hemat buat kamu yang mau fokus menikmati kelembutan potongan daging reguler pilihan.</p>
-                        <ul class="menu-features">
-                            <li>Pilihan kuah sup beragam</li>
-                            <li>Saus racikan spesial</li>
-                            <li>Es krim penutup yang menyegarkan</li>
-                        </ul>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-2">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Pickled Radish</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Danmuji — acar lobak kuning manis &amp; renyah</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-3">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Bean Sprouts</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Sukju namul — tauge segar dengan minyak wijen</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-4">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Tteokbokki</h4>
+                                <span class="menu-item-tag popular">Add-on</span>
+                            </div>
+                            <p>Kue beras pedas manis dengan saus gochujang autentik</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-5">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Gyoza</h4>
+                                <span class="menu-item-tag popular">Add-on</span>
+                            </div>
+                            <p>Pangsit goreng isi ayam &amp; sayuran — crispy di luar, juicy di dalam</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-6">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>French Fries</h4>
+                                <span class="menu-item-tag">Add-on</span>
+                            </div>
+                            <p>Kentang goreng renyah — cocok untuk si kecil</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-7">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🥟 Dimsum Siomay</h4>
+                                <span class="menu-item-tag popular">Add-on</span>
+                            </div>
+                            <p>Siomay ayam udang kukus — lembut dan gurih, cocok dicocol saus sambal</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-8">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🌽 Corn Cheese</h4>
+                                <span class="menu-item-tag popular">Best Seller</span>
+                            </div>
+                            <p>Jagung manis dengan lapisan mozzarella melted — creamy, gurih, dan nagih!</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-9">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🍣 Sushi Roll</h4>
+                                <span class="menu-item-tag">Add-on</span>
+                            </div>
+                            <p>Sushi roll sederhana isi crabstick & mentimun — cocok sebagai pembuka</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-10">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🍤 Tempura Udang</h4>
+                                <span class="menu-item-tag popular">Add-on</span>
+                            </div>
+                            <p>Udang goreng tepung khas Jepang — crispy di luar, manis di dalam</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-11">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🍗 Chicken Katsu</h4>
+                                <span class="menu-item-tag">Add-on</span>
+                            </div>
+                            <p>Ayam fillet tepung panko crispy — disajikan dengan saus katsu spesial</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-12">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🥚 Egg Roll</h4>
+                                <span class="menu-item-tag">Add-on</span>
+                            </div>
+                            <p>Telur gulung isi sayuran segar — ringan dan lezat sebagai side dish</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-13">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🧈 Tahu Goreng</h4>
+                                <span class="menu-item-tag vege">Vegetarian</span>
+                            </div>
+                            <p>Tahu putih goreng crispy — cocok dicelup ke kuah shabu atau dimakan langsung</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- ===== TAB 4: MINUMAN ===== -->
+            <div class="menu-tab-content" id="menu-drinks" role="tabpanel">
+                <p class="menu-tab-desc">Segarkan tenggorokanmu dengan minuman pilihan kami</p>
+                <div class="menu-items-grid">
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-1">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🧊 Es Teh Manis</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Teh manis segar dengan es batu — pelepas dahaga klasik</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-2">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🍋 Lemon Tea</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Teh dengan perasan lemon segar — asam manis menyegarkan</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-3">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🥤 Soft Drinks</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Pilihan minuman bersoda favorit (Coca-Cola, Sprite, Fanta)</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-4">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🧃 Orange Juice</h4>
+                                <span class="menu-item-tag popular">Premium</span>
+                            </div>
+                            <p>Jus jeruk segar asli — kaya vitamin C</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-5">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🧉 Soju</h4>
+                                <span class="menu-item-tag best">Add-on</span>
+                            </div>
+                            <p>Minuman tradisional Korea — tersedia rasa original, grape, peach</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-6">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🫖 Air Mineral</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Air mineral dingin — gratis refill sepuasnya</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-7">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>☕ Iced Coffee</h4>
+                                <span class="menu-item-tag popular">Premium</span>
+                            </div>
+                            <p>Kopi hitam es segar — teman sempurna untuk daging panggang</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-8">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🫒 Lychee Tea</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Teh rasa leci dengan aroma buah segar — manis dan menyegarkan</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-9">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🧃 Yakult Drink</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Minuman probiotik segar — baik untuk pencernaan setelah makan puas</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card menu-item-sm reveal reveal-up reveal-d-10">
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>🍵 Matcha Latte</h4>
+                                <span class="menu-item-tag popular">Premium</span>
+                            </div>
+                            <p>Minuman matcha autentik dengan susu — creamy dan kaya antioksidan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB 5: DESSERT ===== -->
+            <div class="menu-tab-content" id="menu-dessert" role="tabpanel">
+                <p class="menu-tab-desc">Tutup momen makmu dengan dessert manis yang bikin ketagihan</p>
+                <div class="menu-items-grid">
+                    <div class="menu-item-card reveal reveal-up reveal-d-1">
+                        <div class="menu-item-img icecream">
+                            <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400&h=225&fit=crop" alt="Ice Cream" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Ice Cream Free-Flow</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Rasakan creamy-nya ice cream vanilla &amp; coklat — sepuasnya!</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-2">
+                        <div class="menu-item-img bingsu">
+                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=225&fit=crop" alt="Bingsu" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Bingsu</h4>
+                                <span class="menu-item-tag popular">Premium</span>
+                            </div>
+                            <p>Es serut Korea dengan topping kacang merah, susu kental manis, dan bubuk kedelai</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-3">
+                        <div class="menu-item-img mochi">
+                            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=225&fit=crop" alt="Mochi Ice Cream" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Mochi Ice Cream</h4>
+                                <span class="menu-item-tag popular">Premium</span>
+                            </div>
+                            <p>Mochi lembut dengan isian ice cream — pilihan rasa green tea, mango, strawberry</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-4">
+                        <div class="menu-item-img icecream">
+                            <img src="https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?w=400&h=225&fit=crop" alt="Pudding" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Pudding</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Puding vanilla & coklat lembut — topping saus karamel dan buah segar</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-5">
+                        <div class="menu-item-img bingsu">
+                            <img src="https://images.unsplash.com/photo-1582819509237-d3b3e2a7c1e2?w=400&h=225&fit=crop" alt="Pisang Goreng" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Pisang Goreng</h4>
+                                <span class="menu-item-tag popular">Favorit</span>
+                            </div>
+                            <p>Pisang raja goreng tepung crispy — taburan gula aren dan keju parut</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-item-card reveal reveal-up reveal-d-6">
+                        <div class="menu-item-img bingsu">
+                            <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&h=225&fit=crop" alt="Fruit Cocktail" loading="lazy" width="400" height="225" />
+                            <div class="menu-item-img-overlay"></div>
+                        </div>
+                        <div class="menu-item-body">
+                            <div class="menu-item-header">
+                                <h4>Fruit Cocktail</h4>
+                                <span class="menu-item-tag">Free</span>
+                            </div>
+                            <p>Koktail buah segar — semangka, melon, nanas, pepaya dengan sirup manis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -410,55 +1193,35 @@
             <div class="gallery-grid reveal">
                 <div class="gallery-item reveal reveal-scale reveal-d-1">
                     <span class="gallery-bg"></span>
-                    <picture>
-                        <source srcset="assets/images/interior-480w.webp 480w, assets/images/interior-768w.webp 768w, assets/images/interior-800w.webp 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/webp" />
-                        <source srcset="assets/images/interior-480w.jpg 480w, assets/images/interior-768w.jpg 768w, assets/images/interior-800w.jpg 800w" sizes="(max-width: 768px) 100vw, 50vw" type="image/jpeg" />
-                        <img src="assets/interior.webp" alt="Area Makan Utama Sogogi Buaran" loading="lazy" width="800" height="533" decoding="async" data-full="assets/interior.webp" />
-                    </picture>
+                    <img src="assets/interior.webp" alt="Area Makan Utama Sogogi Buaran" loading="lazy" width="800" height="533" decoding="async" />
                     <span class="gallery-overlay"></span>
                     <span class="gallery-zoom">🔍</span>
                     <span class="gallery-label">Area Makan Utama — Luas & Ber-AC</span>
                 </div>
                 <div class="gallery-item reveal reveal-scale reveal-d-2">
                     <span class="gallery-bg"></span>
-                    <picture>
-                        <source srcset="assets/images/meat-480w.webp 480w, assets/images/meat-768w.webp 768w, assets/images/meat-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
-                        <source srcset="assets/images/meat-480w.jpg 480w, assets/images/meat-768w.jpg 768w, assets/images/meat-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
-                        <img src="assets/meat.webp" alt="Daging Premium" loading="lazy" width="800" height="1200" decoding="async" data-full="assets/meat.webp" />
-                    </picture>
+                    <img src="assets/meat.webp" alt="Daging Premium" loading="lazy" width="800" height="1200" decoding="async" />
                     <span class="gallery-overlay"></span>
                     <span class="gallery-zoom">🔍</span>
                     <span class="gallery-label">Daging Premium</span>
                 </div>
                 <div class="gallery-item reveal reveal-scale reveal-d-3">
                     <span class="gallery-bg"></span>
-                    <picture>
-                        <source srcset="assets/images/veggies-480w.webp 480w, assets/images/veggies-768w.webp 768w, assets/images/veggies-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
-                        <source srcset="assets/images/veggies-480w.jpg 480w, assets/images/veggies-768w.jpg 768w, assets/images/veggies-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
-                        <img src="assets/veggies.webp" alt="Sayuran Segar" loading="lazy" width="800" height="533" decoding="async" data-full="assets/veggies.webp" />
-                    </picture>
+                    <img src="assets/veggies.webp" alt="Sayuran Segar" loading="lazy" width="800" height="533" decoding="async" />
                     <span class="gallery-overlay"></span>
                     <span class="gallery-zoom">🔍</span>
                     <span class="gallery-label">Sayuran Segar</span>
                 </div>
                 <div class="gallery-item reveal reveal-scale reveal-d-4">
                     <span class="gallery-bg"></span>
-                    <picture>
-                        <source srcset="assets/images/sidedish-480w.webp 480w, assets/images/sidedish-768w.webp 768w, assets/images/sidedish-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
-                        <source srcset="assets/images/sidedish-480w.jpg 480w, assets/images/sidedish-768w.jpg 768w, assets/images/sidedish-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
-                        <img src="assets/sidedish.webp" alt="Side Dish Korea" loading="lazy" width="800" height="600" decoding="async" data-full="assets/sidedish.webp" />
-                    </picture>
+                    <img src="assets/sidedish.webp" alt="Side Dish Korea" loading="lazy" width="800" height="600" decoding="async" />
                     <span class="gallery-overlay"></span>
                     <span class="gallery-zoom">🔍</span>
                     <span class="gallery-label">Side Dish Korea</span>
                 </div>
                 <div class="gallery-item reveal reveal-scale reveal-d-5">
                     <span class="gallery-bg"></span>
-                    <picture>
-                        <source srcset="assets/images/icecream-480w.webp 480w, assets/images/icecream-768w.webp 768w, assets/images/icecream-800w.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/webp" />
-                        <source srcset="assets/images/icecream-480w.jpg 480w, assets/images/icecream-768w.jpg 768w, assets/images/icecream-800w.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" type="image/jpeg" />
-                        <img src="assets/icecream.webp" alt="Es Krim Penutup" loading="lazy" width="800" height="1423" decoding="async" data-full="assets/icecream.webp" />
-                    </picture>
+                    <img src="assets/icecream.webp" alt="Es Krim Penutup" loading="lazy" width="800" height="1423" decoding="async" />
                     <span class="gallery-overlay"></span>
                     <span class="gallery-zoom">🔍</span>
                     <span class="gallery-label">Es Krim Penutup</span>
@@ -471,6 +1234,95 @@
     <div class="section-divider wave-reverse">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
             <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.25"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #5: GOOGLE REVIEWS ===== -->
+    <section class="testimonials" id="socialProof" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">⭐ Google Reviews</span>
+                <h2 class="section-title">Apa Kata Google?</h2>
+                <p class="section-sub">Rating 5.0 dari 15.000+ pelanggan — bukti kualitas Sogogi Buaran!</p>
+            </div>
+            <div class="reveal reveal-up" id="googleReviews"></div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #1: INSTAGRAM FEED ===== -->
+    <section class="perks" id="igFeedSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">📸 Instagram</span>
+                <h2 class="section-title">Sogogi di Instagram</h2>
+                <p class="section-sub">Tag <strong>@sogogishabu</strong> untuk foto kamu ditampilkan di sini! 📱</p>
+            </div>
+            <div class="reveal reveal-up" id="igFeed"></div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #20: DAPUR CAM CORNER ===== -->
+    <section class="perks" id="dapurCamSection" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">👨‍🍳 Dapur Langsung</span>
+                <h2 class="section-title">Yang Lagi Disiapin di Dapur 🔥</h2>
+                <p class="section-sub">Intip aktivitas dapur Sogogi — dari motong daging sampai dessert siap saji!</p>
+            </div>
+            <div class="cam-corner reveal reveal-up" id="dapurCam">
+                <div class="cam-emoji">🥩</div>
+                <div class="cam-info">
+                    <div class="cam-label">⚡ Dapur Langsung</div>
+                    <div class="cam-text">⚡ Chef lagi motong daging brisket tipis-tipis...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #21: PANCI REKOMENDASI ===== -->
+    <section class="perks" id="panciRekomendasiSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">🧠 Sains Sogogi</span>
+                <h2 class="section-title">Panci Rekomendasi 🔬</h2>
+                <p class="section-sub">Fakta ilmiah (versi Sogogi) yang bakal bikin makan makin seru! 😎</p>
+            </div>
+            <div class="panci-section reveal reveal-up" id="panciRekomendasi">
+                <div class="panci-result" id="panciResult"></div>
+                <button class="btn btn-outline" id="panciHitung" style="margin-top:16px;display:inline-flex;">🎲 Fakta Lainnya!</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
             <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
         </svg>
     </div>
@@ -522,14 +1374,14 @@
 
                     <div class="form-group" data-field="name">
                         <label for="resName">Nama Lengkap <span class="required">*</span></label>
-                        <input type="text" id="resName" name="name" placeholder="Contoh: Budi Santoso" required />
+                        <input type="text" id="resName" name="name" placeholder="Contoh: Budi Santoso" autocomplete="name" required />
                         <div class="error-message">⚠️ Masukkan nama lengkap minimal 3 karakter</div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group" data-field="phone">
                             <label for="resPhone">Nomor WhatsApp <span class="required">*</span></label>
-                            <input type="tel" id="resPhone" name="phone" placeholder="0812xxxxxxxx" required />
+                            <input type="tel" id="resPhone" name="phone" placeholder="0812xxxxxxxx" autocomplete="tel" required />
                             <div class="error-message">⚠️ Masukkan nomor WhatsApp valid (08xx atau +62xx)</div>
                         </div>
                         <div class="form-group" data-field="guests">
@@ -584,7 +1436,7 @@
 
                     <div class="form-group">
                         <label for="resNotes">Catatan Tambahan</label>
-                        <textarea id="resNotes" name="notes" placeholder="Contoh: Ada yang ulang tahun, minta meja dekat AC, dll." rows="3"></textarea>
+                        <textarea id="resNotes" name="notes" placeholder="Contoh: Ada yang ulang tahun, minta meja dekat AC, dll." rows="3" autocomplete="off"></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">
@@ -594,6 +1446,130 @@
                         Data kamu aman. Kami hanya menggunakan WhatsApp untuk konfirmasi reservasi.
                     </p>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--text)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #8: NEARBY LANDMARKS ===== -->
+    <section class="perks" id="nearbyLandmarksSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">📍 Sekitar Sini</span>
+                <h2 class="section-title">Tempat Terdekat dari Sogogi 🗺️</h2>
+                <p class="section-sub">Cari Sogogi aja! Dekat dari mana-mana — cek landmark di sekitar Buaran.</p>
+            </div>
+            <div class="landmarks-grid reveal reveal-up" id="nearbyLandmarks"></div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-main)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #24: TABLE TURN PREDICTION ===== -->
+    <section class="perks" id="tablePredictionSection" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">⏳ Prediksi Meja</span>
+                <h2 class="section-title">Berapa Lama Nunggu Meja? 🤔</h2>
+                <p class="section-sub">Estimasi waktu tunggu berdasarkan jam dan hari kunjungan — biar kamu bisa rencanain datang!</p>
+            </div>
+            <div class="reveal reveal-up" style="text-align:center;" id="tablePrediction"></div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #15: MEJA VIRTUAL PICKER ===== -->
+    <section class="perks" id="mejaPickerSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">🪑 Pilih Meja</span>
+                <h2 class="section-title">Pilih Meja Favorit Kamu 🎯</h2>
+                <p class="section-sub">Lihat denah meja dan pilih sendiri! Sebutkan nomor meja pas reservasi ya.</p>
+            </div>
+            <div class="meja-picker reveal reveal-up" id="mejaPicker">
+                <div class="meja-layout">
+                    <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;text-align:center;">🔴 = Terbooking | Pilih meja yang tersedia</p>
+                    <div class="meja-grid" id="mejaGrid"></div>
+                    <div class="meja-selected-info" id="mejaSelected"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-alt)" opacity="0.3"></path>
+            <path d="M0,20 C240,50 480,0 720,20 C960,40 1200,5 1440,20 L1440,80 L0,80 Z" fill="var(--bg-main)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #11: QR CODE GENERATOR ===== -->
+    <section class="perks" id="qrCodeSection" style="background:var(--bg-main);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">📱 QR Menu</span>
+                <h2 class="section-title">Scan & Share Menu</h2>
+                <p class="section-sub">Scan QR code ini untuk lihat menu dari HP kamu, atau share ke teman!</p>
+            </div>
+            <div class="qr-section reveal reveal-up" id="qrContainer">
+                <div class="qr-wrapper">
+                    <img id="qrCodeImg" src="" alt="QR Code Menu Sogogi" width="200" height="200" />
+                    <p id="qrMenuText">Memuat QR code...</p>
+                    <button class="btn btn-wa" id="qrShareWa" style="display:inline-flex;padding:10px 24px;font-size:0.85rem;">💬 Share ke WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION DIVIDER ===== -->
+    <div class="section-divider wave-reverse">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg-main)" opacity="0.3"></path>
+            <path d="M0,25 C240,55 480,5 720,25 C960,45 1200,5 1440,25 L1440,80 L0,80 Z" fill="var(--bg-alt)"></path>
+        </svg>
+    </div>
+
+    <!-- ===== #17: LOYALTY CARD DIGITAL ===== -->
+    <section class="perks" id="loyaltyCardSection" style="background:var(--bg-alt);transition:background 0.3s ease;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">🎯 Loyalty Card</span>
+                <h2 class="section-title">Kartu Stempel Digital 🥩</h2>
+                <p class="section-sub">Setiap reservasi via website dapet 1 stempel. Kumpulin 5 stempel — FREE 1 PAX! 🎉</p>
+            </div>
+            <div class="loyalty-card reveal reveal-up" id="loyaltyCard">
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">Stempel kamu:</p>
+                <div class="loyalty-stamps" id="loyaltyStamps"></div>
+                <div class="loyalty-progress-wrap">
+                    <div class="loyalty-progress" id="loyaltyProgress"></div>
+                </div>
+                <p style="font-size:0.85rem;" id="loyaltyCount">0/5</p>
+                <div class="loyalty-actions">
+                    <button class="btn-sm" id="loyaltyAddStamp">✅ Tambah Stempel</button>
+                    <button class="btn-sm btn-primary-sm" id="loyaltyClaim" disabled>🎉 Klaim Free 1 Pax!</button>
+                    <button class="btn-sm" id="loyaltyReset">🔄 Reset</button>
+                </div>
             </div>
         </div>
     </section>
@@ -719,13 +1695,32 @@
         <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="btn btn-wa" style="flex:1;justify-content:center;">💬 Chat WhatsApp</a>
     </div>
 
+    <!-- ===== #22: SOGOGI-MERGENCY ===== -->
+    <button class="sogogi-mercy" id="sogogiMercy" aria-label="Darurat! Saya lapar!">
+        <span class="mercy-pulse"></span>
+        🤤
+    </button>
+
+    <!-- ===== #19: MUSIC PLAYER ===== -->
+    <div class="music-player" id="musicPlayer">
+        <span class="music-note">🎵</span>
+        <button class="music-btn" id="musicToggle" aria-label="Putar musik latar">🎵</button>
+    </div>
+    <audio id="bgMusic" loop preload="none">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+    </audio>
+
     <!-- ===== WHATSAPP FLOAT ===== -->
     <a href="https://wa.me/622129195053?text=Halo%20Sogogi%20Buaran%2C%20saya%20mau%20reservasi%20meja%20untuk..." target="_blank" rel="noopener" class="wa-float" aria-label="Reservasi via WhatsApp">
         <span class="pulse"></span>
         💬
     </a>
 
+    <!-- ===== #7: SHARE MENU BUTTON ===== -->
+    <button class="share-menu-wa" data-item="Menu Sogogi Buaran" style="position:fixed;bottom:148px;right:24px;z-index:995;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border-subtle);background:var(--bg-card);box-shadow:var(--shadow-md);color:var(--primary);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;" onmouseover="this.style.borderColor='var(--primary)';this.style.transform='scale(1.1)'" onmouseout="this.style.borderColor='';this.style.transform=''" aria-label="Share menu via WhatsApp">📤</button>
+
     <!-- ===== JavaScript ===== -->
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/features.js"></script>
 </body>
 </html>

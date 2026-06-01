@@ -53,3 +53,32 @@ coverage/
 
 # --- Generated Assets ---
 assets/images/
+
+# --- Ruflo Plugin Ecosystem (development tooling) ---
+ruflo/
+
+# --- Development Scripts ---
+scripts/
+
+# --- AI / Agent Configuration ---
+CLAUDE.md
+CLAUDE.md.pre-ruflo
+.claude-flow/
+.claude/
+.swarm/
+
+# --- Project Documentation (not part of website) ---
+DESIGN.md
+web.md
+
+# --- Garbage / Temp ---
+nul
+
+# --- Database ---
+ruvector.db
+
+# --- Frontend Dependencies (static site doesn't need these in repo) ---
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

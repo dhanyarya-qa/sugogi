@@ -579,7 +579,7 @@ document.querySelectorAll('section:not(.hero), footer').forEach(section => {
     const nextBtn = $('testiNext');
     const dots = document.querySelectorAll('.testi-dot');
     if (!track || !prevBtn || !nextBtn) return;
-    const total =    track.querySelectorAll('.testi-card').length;
+    const total = track.querySelectorAll('.testi-card').length;
     let current = 0;
     function goTo(i) {
         if (total === 0) return; // no cards to show
@@ -665,6 +665,54 @@ document.querySelectorAll('section:not(.hero), footer').forEach(section => {
     cards.forEach(c => observer.observe(c));
 })();
 
+// ===== MENU TABS =====
+(function() {
+    const tabs = document.querySelectorAll('.menu-tab');
+    const contents = document.querySelectorAll('.menu-tab-content');
+    if (!tabs.length || !contents.length) return;
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const target = this.dataset.tab;
+            if (!target) return;
+
+            // Update active tab
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+
+            // Show target content
+            contents.forEach(c => {
+                c.classList.remove('active');
+                if (c.id === 'menu-' + target) {
+                    c.classList.add('active');
+                    // Re-trigger reveal animations for new visible content
+                    const revealEls = c.querySelectorAll('.reveal');
+                    revealEls.forEach(el => {
+                        el.classList.remove('visible');
+                        // Use IntersectionObserver if available (from outer closure)
+                        if (typeof revealObserver !== 'undefined') {
+                            revealObserver.observe(el);
+                        }
+                    });
+                }
+            });
+
+            // Smooth scroll if tab is off-screen
+            const menuSection = document.getElementById('menu');
+            if (menuSection) {
+                const rect = menuSection.getBoundingClientRect();
+                if (rect.top < 0) {
+                    menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+})();
+
 // ===== FLOATING FOOD PARTICLES =====
 (function() {
     const emojis = ['🥩', '🥬', '🥟', '🔥', '🍲', '🥤', '🥢', '🧄', '🌶️', '🧅'];
@@ -682,6 +730,18 @@ document.querySelectorAll('section:not(.hero), footer').forEach(section => {
         p.style.animationDelay = (Math.random() * 15) + 's';
         c.appendChild(p);
     }
+})();
+
+// ===== MENU IMAGE FALLBACK =====
+(function() {
+    document.querySelectorAll('.menu-item-img img').forEach(img => {
+        function hideOnFail() {
+            img.style.display = 'none';
+            // Keep overlay visible for nice gradient backdrop
+        }
+        img.addEventListener('error', hideOnFail);
+        if (img.complete && img.naturalWidth === 0) hideOnFail();
+    });
 })();
 
 })();
