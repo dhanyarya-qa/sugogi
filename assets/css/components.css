@@ -1398,6 +1398,10 @@ footer {
         .footer-cta {
             margin: 24px 0;
         }
+        footer .btn {
+            padding: 10px 22px;
+            font-size: 0.82rem;
+        }
 
         @media (max-width: 768px) {
             footer .container { grid-template-columns: 1fr; gap: 32px; }

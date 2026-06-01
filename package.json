@@ -4,10 +4,27 @@
     "dev:serve": "npx serve . --port 3000"
   },
   "dependencies": {
-    "agentic-flow": "^2.0.13"
+    "agentic-flow": "^2.0.13",
+    "puppeteer-core": "^25.1.0"
   },
   "devDependencies": {
     "live-server": "^1.2.2",
     "typescript": "^6.0.3"
-  }
+  },
+  "name": "sugogi",
+  "version": "1.0.0",
+  "description": "[![Built with](https://img.shields.io/badge/Built%20with-Ruflo%20%2B%20Codebuff%20CLI-8A2BE2)](https://codebuff.com) [![AI Generated](https://img.shields.io/badge/AI-Generated_%2F_Dibuat_AI-FF6B6B)](#) [![DeepSeek v4](https://img.shields.io/badge/Model-DeepSeek%20v4%20Flash-4A90D9)](https://deepseek.com)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhanyarya-qa/sugogi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dhanyarya-qa/sugogi/issues"
+  },
+  "homepage": "https://github.com/dhanyarya-qa/sugogi#readme"
 }
